@@ -1,1 +1,3 @@
-# study-js-algorithm
+# JS 알고리즘 문제풀이
+
+JS 알고리즘 문제풀이 업로드 용
