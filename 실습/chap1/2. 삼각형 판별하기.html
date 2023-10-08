@@ -1,0 +1,21 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      function solution(a, b, c) {
+        let max = Math.max(a, b, c);
+        let total = a + b + c;
+        let answer = "NO";
+
+        if (a + b + c - max > max) answer = "YES";
+        return answer;
+      }
+
+      console.log(solution(6, 7, 11)); // YES
+      console.log(solution(13, 33, 17)); // NO
+    </script>
+  </body>
+</html>
