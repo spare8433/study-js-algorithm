@@ -1,0 +1,29 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      // 아스키코드 A ~ Z 까지에 해당하는지 확인
+      function solution(s) {
+        let answer = 0;
+        const ASCII_CODE_A = "A".charCodeAt();
+        const ASCII_CODE_Z = "Z".charCodeAt();
+
+        for (let st of s) {
+          if (
+            st.charCodeAt() >= ASCII_CODE_A &&
+            st.charCodeAt() <= ASCII_CODE_Z
+          )
+            answer++;
+        }
+
+        return answer;
+      }
+
+      let str = "KoreaTimeGood";
+      console.log(solution(str));
+    </script>
+  </body>
+</html>

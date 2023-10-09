@@ -1,0 +1,22 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      // 모든문자를 대문자로 변경하는 toUpperCase 활용
+      function solution(s) {
+        let answer = "";
+
+        for (let st of s) {
+          answer += st.toUpperCase();
+        }
+        return answer;
+      }
+
+      let str = "ItisTimeToStudy";
+      console.log(solution(str));
+    </script>
+  </body>
+</html>
