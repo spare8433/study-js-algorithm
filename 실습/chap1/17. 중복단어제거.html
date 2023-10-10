@@ -1,0 +1,22 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      // Array.includes() 를 활용 특정 값 있는지 확인 후 값 입력
+      function solution(s) {
+        let answer;
+        let arr = [];
+        s.forEach((element) => {
+          if (!arr.includes(element)) arr.push(element);
+        });
+        answer = arr.join(", ");
+        return answer;
+      }
+      let str = ["good", "time", "good", "time", "student"];
+      console.log(solution(str));
+    </script>
+  </body>
+</html>

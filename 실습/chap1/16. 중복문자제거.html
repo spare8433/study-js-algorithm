@@ -1,0 +1,20 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      // String.includes() 를 활용 특정 값 있는지 확인 후 값 입력
+      function solution(s) {
+        let answer = "";
+
+        for (const str of s) {
+          if (!answer.includes(str)) answer += str;
+        }
+        return answer;
+      }
+      console.log(solution("ksekkset"));
+    </script>
+  </body>
+</html>
