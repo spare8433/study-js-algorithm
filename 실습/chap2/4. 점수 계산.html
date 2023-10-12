@@ -1,0 +1,27 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      function solution(arr) {
+        let answer = 0,
+          cnt = 0; // 추가 점수
+
+        arr.forEach((element) => {
+          if (element === 0) {
+            cnt = 0; // 틀릴 경우 추가 점수는 0
+          } else {
+            cnt += 1; // 맞는 경우 추가 점수 1 증가
+            answer += cnt; // 추가 점수 반영된 점수 추가
+          }
+        });
+        return answer;
+      }
+
+      let arr = [1, 0, 1, 1, 1, 0, 0, 1, 1, 0];
+      console.log(solution(arr));
+    </script>
+  </body>
+</html>
