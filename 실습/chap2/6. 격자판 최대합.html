@@ -1,0 +1,45 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      function solution(arr) {
+        let answer = Number.MIN_SAFE_INTEGER;
+        let n = arr.length;
+        let leftDiagonal = 0; // 좌상단 에서 우하단 향하는 대각선
+        let rightDiagonal = 0; // 우상단 에서 좌하단 향하는 대각선
+        for (let i = 0; i < n; i++) {
+          let rowHap = 0; // 행의 합
+          let columHap = 0; // 열의 합
+          for (let j = 0; j < n; j++) {
+            rowHap += arr[i][j];
+            columHap += arr[j][i];
+          }
+          if (rowHap > columHap && rowHap > answer) answer = rowHap;
+          if (rowHap < columHap && columHap > answer) answer = columHap;
+          // Math.max() 사용하는 방식(추천) 위는 내가 푼방식 (비추천)
+          // answer=Math.max(answer, rowHap, columHap);
+          leftDiagonal += arr[i][i];
+          rightDiagonal += arr[n - i - 1][n - i - 1];
+        }
+        if (leftDiagonal > answer) answer = leftDiagonal;
+        if (rightDiagonal > answer) answer = rightDiagonal;
+        // Math.max() 사용하는 방식(추천) 위는 내가 푼방식 (비추천)
+        // answer=Math.max(answer, leftDiagonal, rightDiagonal);
+
+        return answer;
+      }
+
+      let arr = [
+        [10, 13, 10, 12, 15],
+        [12, 39, 30, 23, 11],
+        [11, 25, 50, 53, 15],
+        [19, 27, 29, 37, 27],
+        [19, 13, 30, 13, 19],
+      ];
+      console.log(solution(arr));
+    </script>
+  </body>
+</html>
