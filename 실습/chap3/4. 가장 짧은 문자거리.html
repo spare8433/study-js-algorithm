@@ -1,0 +1,59 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      // 문자열의 문자단위로 반복하며 문자기준으로 좌우측 문자를 반복해서 탐색
+      // 최대한 불필요한 순회를 줄이려 시도함
+      function solution(s, t) {
+        let answer = [];
+
+        for (let index = 0; index < s.length; index++) {
+          // 현재 문자가 t 와 같다면 0 으로 끝냄
+          if (s[index] === t) {
+            answer.push(0);
+          } else {
+            let min = Number.MAX_SAFE_INTEGER;
+
+            // 좌측부터 탐색
+            for (let left = index - 1; left > 0; left--) {
+              if (s[left] === t) {
+                min = index - left;
+                break;
+              }
+            }
+
+            // 좌측 탐색 과정에서 거리가 최소치인 1이라면 우측탐색을 스킵
+            if (min === 1) {
+              answer.push(min);
+              continue;
+            }
+
+            // 좌측 탐색이  최소치인 1이 아닌경우 우측 탐색을 시작
+            for (let right = index + 1; right < s.length; right++) {
+              if (s[right] === t) {
+                if (min > right - index) min = right - index;
+                break;
+              }
+            }
+
+            // 좌측 탐색이 일어나지 않았다면 min 은 초기값인 Number.MAX_SAFE_INTEGER
+            // 우측 탐색이 일어나지 않았다면 역시 min 은 초기값인 Number.MAX_SAFE_INTEGER
+            // 1차 적으로 현재 문자가 t 가 아니고 좌우측 탐색모두 없다면 t 에 해당하는 문자는 없다 판단 NaN 반환
+            if (min === Number.MAX_SAFE_INTEGER) min = NaN;
+
+            answer.push(min);
+          }
+        }
+        return answer;
+      }
+
+      let str = "teachermode";
+      // let str = "e";     좌우측 탐색이 없을 경우     결과 : [0]
+      // let str = "ss";    탐색할 문자가 없는 경우     결과 : [NaN, NaN]
+      console.log(solution(str, "e"));
+    </script>
+  </body>
+</html>

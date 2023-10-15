@@ -1,0 +1,32 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      function solution(s) {
+        let answer = "";
+        let keyword = s[0];
+        let count = 0;
+        for (let index = 0; index < s.length; index++) {
+          // 새로운 문자 문자열에 추가
+          if (count === 0) answer += keyword;
+
+          count++;
+
+          // 다음 문자가 새로 들어오겠다 싶으면 지금까지 카운트를 문자열에 추가
+          if (keyword !== s[index + 1]) {
+            if (count > 1) answer += count; // 카운트가 숫자 입력은 생략
+            count = 0;
+            keyword = s[index + 1]; // 키워드 변경
+          }
+        }
+        return answer;
+      }
+
+      let str = "KKHSSSSSSSE";
+      console.log(solution(str));
+    </script>
+  </body>
+</html>
