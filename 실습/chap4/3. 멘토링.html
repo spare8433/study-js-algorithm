@@ -1,0 +1,51 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      // 들어온 순서대로 순위가 정해지는 걸 이용해 멘토 멘티 조합을 만들어 모든 경우에 해당하는 결과를 반환
+      // '(n1, n2)' : n1 이 멘토 n2 가 멘티
+      function solution(test) {
+        let answer = 0;
+        let team = [];
+
+        // 첫번째 결과로 인해 만들어질 수 있는 모든 멘토멘티 조합의 경우를 문자형태로 배열을 저장
+        test[0].forEach((element, index, arr) => {
+          for (let j = index + 1; j < arr.length; j++) {
+            team.push(`(${element}, ${arr[j]})`);
+          }
+        });
+
+        // 수학성적 결과 배열 순회
+        for (let index = 1; index < test.length; index++) {
+          let tmpTeam = []; // n 번째 시험에서 나오는 멘토멘티 조합 배열
+          // n 번째 수학성적 결과의 학생 배열 순회
+          test[index].forEach((std, i, arr) => {
+            // 1등 학생부터 하위권 학생까지 순회
+            for (let j = i + 1; j < arr.length; j++) {
+              // 이전 시험결과로 나올 수 있는 멘토멘티 조합과 동일한 부분이 있다면 현재까지 멘토멘티가 가능한 조합으로 판단해 tmpTeam 배열에 저장
+              if (team.includes(`(${std}, ${arr[j]})`))
+                tmpTeam.push(`(${std}, ${arr[j]})`);
+            }
+          });
+
+          // n 번째 시험을 거친 후 여전히 가능한 멘토멘티 조합을 team 배열에 저장
+          // 무결성을 위한 spread operator
+          team = [...tmpTeam];
+        }
+        console.log(team);
+        answer = team.length;
+        return answer;
+      }
+
+      let arr = [
+        [3, 4, 1, 2],
+        [4, 3, 2, 1],
+        [3, 1, 4, 2],
+      ];
+      console.log(solution(arr));
+    </script>
+  </body>
+</html>
