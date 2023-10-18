@@ -33,14 +33,12 @@
             }
 
             // 예산을 넘어가면 count 올리지않고 끝냄
-            if (sum > m) {
-              break;
-            } else {
-              // 예산안쪽이면 카운트와 학생 조합을 추가함
-              currentArr.push(sortArr[i]);
-              count++;
-              if (sum === m) break; // 예산에 딱 맞으면 다음 단계 스킵
-            }
+            if (sum > m) break;
+
+            // 예산안쪽이면 카운트와 학생 조합을 추가함
+            currentArr.push(sortArr[i]);
+            count++;
+            if (sum === m) break; // 예산에 딱 맞으면 다음 단계 스킵
           }
 
           // 최대값을 넘어가면 학생 수와 조합을 저장

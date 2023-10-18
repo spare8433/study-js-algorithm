@@ -30,6 +30,24 @@
         return sortArr[k - 1];
       }
 
+      // 정답지 참고 보완한 코드
+      // function solution(n, k, card) {
+      //   let tmpSet = new Set(); //  3가지 카드합의 전체 경우의 수를 담는 SET
+      //   let sortArr = []; // 정렬 최종 결과를 담는 배열 (결과를 보기 위함)
+
+      //   for (let index = 0; index < n; index++) {
+      //     for (let i = index + 1; i < n; i++) {
+      //       for (let j = i + 1; j < n; j++) {
+      //         tmpSet.add(card[index] + card[i] + card[j]);
+      //       }
+      //     }
+      //   }
+
+      //   sortArr = [...tmpSet].sort((a, b) => b - a); // 내림차순 정렬
+      //   console.log(sortArr);
+      //   return sortArr[k - 1];
+      // }
+
       let arr = [13, 15, 34, 23, 45, 65, 33, 11, 26, 42];
       console.log(solution(10, 3, arr));
     </script>
