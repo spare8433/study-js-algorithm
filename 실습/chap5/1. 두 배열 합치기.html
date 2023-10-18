@@ -1,0 +1,46 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      function solution(arr1, arr2) {
+        let answer = [];
+        let arr1Index = 0;
+        let arr2Index = 0;
+
+        // O(n): two pointers algorithm
+        for (let i = 0; i < arr1.length + arr2.length; i++) {
+          // arr1 다 집어 넣은 경우
+          if (arr1[arr1Index] === undefined) {
+            answer.push(arr2[arr2Index++]);
+            continue;
+          }
+
+          // arr2 다 집어 넣은 경우
+          if (arr2[arr2Index] === undefined) {
+            answer.push(arr1[arr1Index++]);
+            continue;
+          }
+
+          // arr1 같거나 더 작으면 arr1 내용 삽입 (값이 같은 경우 arr1 내용을 넣도록 설정)
+          if (arr1[arr1Index] <= arr2[arr2Index]) {
+            answer.push(arr1[arr1Index]);
+            arr1Index++;
+          } else {
+            answer.push(arr2[arr2Index]);
+            arr2Index++;
+          }
+        }
+        // O(n logn)
+        // answer = [...arr1, ...arr2].sort((a, b) => a - b);
+        return answer;
+      }
+
+      let a = [1, 3, 5];
+      let b = [2, 3, 6, 7, 9];
+      console.log(solution(a, b));
+    </script>
+  </body>
+</html>

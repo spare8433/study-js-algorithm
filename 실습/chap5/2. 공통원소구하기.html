@@ -1,0 +1,52 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      function solution(arr1, arr2) {
+        let answer = [];
+        let sortArr1 = arr1.sort((a, b) => a - b);
+        let sortArr2 = arr2.sort((a, b) => a - b);
+
+        // console.log(sortArr1);
+        // console.log(sortArr2);
+
+        let arr1Index = 0;
+        let arr2Index = 0;
+        let currentValue;
+
+        for (let i = 0; i < sortArr1.length + sortArr2.length; i++) {
+          // sortArr1[arr1Index] 이 더 작으면 arr1Index 1 증가
+          if (sortArr1[arr1Index] < sortArr2[arr2Index]) {
+            arr1Index++;
+          }
+          // sortArr2[arr2Index] 이 더 작으면 arr2Index 1 증가
+          else if (sortArr1[arr1Index] > sortArr2[arr2Index]) {
+            arr2Index++;
+          }
+          // sortArr1[arr1Index] 와 sortArr2[arr2Index] 값이 동일하면 배열에 저장
+          else {
+            answer.push(sortArr1[arr1Index]);
+            arr1Index++;
+            arr2Index++;
+          }
+
+          // 한쪽 배열이라도 비워진 경우
+          if (
+            sortArr1[arr1Index] === undefined ||
+            sortArr2[arr2Index] === undefined
+          )
+            break;
+        }
+        return answer;
+      }
+      let a = [1, 3, 9, 5, 2];
+      let b = [3, 2, 5, 7, 8];
+      // let a = [1, 3, 1, 3, 1, 3, 9, 5, 2];
+      // let b = [3, 2, 5, 7, 2, 5, 7, 2, 5, 7, 8, 5, 7, 8];
+      console.log(solution(a, b));
+    </script>
+  </body>
+</html>
