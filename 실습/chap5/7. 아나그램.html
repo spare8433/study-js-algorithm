@@ -1,0 +1,42 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      function solution(str1, str2) {
+        let answer = "YES";
+
+        let mapA = new Map();
+        let mapB = new Map();
+
+        for (let i = 0; i < str1.length; i++) {
+          mapA.has(str1[i])
+            ? mapA.set(str1[i], mapA.get(str1[i]) + 1)
+            : mapA.set(str1[i], 1);
+
+          mapB.has(str2[i])
+            ? mapB.set(str2[i], mapB.get(str2[i]) + 1)
+            : mapB.set(str2[i], 1);
+        }
+
+        mapA.forEach((value, key) => {
+          console.log(key);
+          console.log(value);
+          if (mapA.get(key) !== mapB.get(key)) answer = "NO";
+        });
+
+        return answer;
+      }
+
+      let a = "AbaAeCe";
+      let b = "baeeACA";
+      console.log(solution(a, b));
+
+      let c = "abaCC";
+      let d = "Caaab";
+      console.log(solution(c, d));
+    </script>
+  </body>
+</html>

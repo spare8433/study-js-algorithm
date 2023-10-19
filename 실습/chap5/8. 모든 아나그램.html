@@ -1,0 +1,63 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      function compareMaps(mapS, mapT) {
+        let result = true;
+        // for (let i = 0; i < array.length; i++) {
+        //   if (!!mapS.get(key) || value !== mapS.get(key)) {
+        //     return false;
+        //   }
+        // }
+        console.log(mapS);
+        mapT.forEach((value, key) => {
+          if (mapS.get(key) === undefined || value !== mapS.get(key)) {
+            result = false;
+          }
+        });
+
+        console.log(result);
+        return result;
+      }
+
+      function solution(s, t) {
+        let answer = 0;
+        let answerArray = [];
+        let lt = 0;
+        let mapS = new Map();
+        let mapT = new Map();
+
+        for (const word of t) {
+          mapT.has(word)
+            ? mapT.set(word, mapT.get(word) + 1)
+            : mapT.set(word, 1);
+        }
+
+        for (let i = 0; i < s.length; i++) {
+          mapS.has(s[i])
+            ? mapS.set(s[i], mapS.get(s[i]) + 1)
+            : mapS.set(s[i], 1);
+
+          if (i > t.length - 1) {
+            mapS.set(s[lt], mapS.get(s[lt]) - 1);
+            lt++;
+          }
+
+          if (i >= t.length - 1 && compareMaps(mapS, mapT)) {
+            answerArray.push(s.slice(lt, i + 1));
+            answer++;
+          }
+        }
+        console.log(answerArray);
+        return answer;
+      }
+
+      let a = "bacaAacba";
+      let b = "abc";
+      console.log(solution(a, b));
+    </script>
+  </body>
+</html>

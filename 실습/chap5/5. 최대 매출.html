@@ -1,0 +1,35 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      function solution(k, arr) {
+        let answer,
+          sum = 0,
+          lt = 0,
+          max = Number.MIN_SAFE_INTEGER,
+          answerArr = [];
+
+        for (let i = 0; i < arr.length; i++) {
+          sum += arr[i];
+
+          if (i > k - 1) sum -= arr[lt++];
+
+          if (sum > max) {
+            max = sum;
+            answerArr = arr.slice(lt, i + 1);
+          }
+        }
+        answer = max;
+
+        console.log(answerArr);
+        return answer;
+      }
+
+      let a = [12, 15, 11, 20, 25, 10, 20, 19, 13, 15];
+      console.log(solution(3, a));
+    </script>
+  </body>
+</html>
