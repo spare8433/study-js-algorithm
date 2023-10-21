@@ -1,0 +1,47 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      function solution(s) {
+        let answer;
+        let stack = [];
+        let regex = /[\+\-\*\/]/;
+
+        for (const word of s) {
+          if (regex.test(word)) {
+            let right = parseInt(stack.pop());
+            let left = parseInt(stack.pop());
+            switch (word) {
+              case "+":
+                answer = left + right;
+                break;
+              case "-":
+                answer = left - right;
+                break;
+              case "*":
+                answer = left * right;
+                break;
+              case "/":
+                answer = left / right;
+                break;
+              default:
+                break;
+            }
+            stack.push(answer);
+            continue;
+          }
+          stack.push(word);
+        }
+
+        answer = stack.pop();
+        return answer;
+      }
+
+      let str = "352+*9-";
+      console.log(solution(str));
+    </script>
+  </body>
+</html>

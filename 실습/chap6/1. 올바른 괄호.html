@@ -1,0 +1,33 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      function solution(s) {
+        let answer = "YES";
+        let stack = [];
+
+        for (const word of s) {
+          if (word === ")") {
+            if (stack.length === 0) {
+              return "NO";
+            }
+            stack.pop();
+          } else {
+            stack.push(word);
+          }
+        }
+
+        if (stack.length > 0) answer = "NO";
+
+        return answer;
+      }
+
+      let a = "(()(()))(()"; // NO
+      // let a = "(())()"; // YES
+      console.log(solution(a));
+    </script>
+  </body>
+</html>
