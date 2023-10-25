@@ -1,0 +1,36 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      function solution(s) {
+        let answer = 0;
+        let stack = [];
+
+        // 레이저 구분을 위한 정규식 처리부분 레이저는 | 문자로 변경
+        let regex = /\(\)/g;
+        let processedS = s.replaceAll(regex, "|");
+
+        // 아이디어
+        // 잘릴때마다 겹쳐있는 막대만큼(stack.length) 조각이 생긴다.
+        // 어떤 막대가 더이상 짤리지 않을 때(')' 문자가 올 때) 남은 막대가 마지막 한조각이 된다.
+        for (const word of processedS) {
+          if (word === "|") answer += stack.length;
+          if (word === "(") stack.push(word);
+          if (word === ")") {
+            stack.pop();
+            answer++;
+          }
+        }
+        return answer;
+      }
+
+      let a = "()(((()())(())()))(())"; // 17
+      let b = "(((()(()()))(())()))(()())"; // 24
+      console.log(solution(a));
+      console.log(solution(b));
+    </script>
+  </body>
+</html>

@@ -8,13 +8,16 @@
       function solution(s) {
         let answer;
         let stack = [];
-        let regex = /[\+\-\*\/]/;
+        let regex = /[\+\-\*\/]/; // 사칙연산 문자 확인용 정규식
 
         for (const word of s) {
+          // 사칙연산 문자일 경우
           if (regex.test(word)) {
-            let right = parseInt(stack.pop());
-            let left = parseInt(stack.pop());
-            switch (word) {
+            let right = parseInt(stack.pop()); // 좌측 숫자
+            let left = parseInt(stack.pop()); // 우측 숫자
+            switch (
+              word // 계산
+            ) {
               case "+":
                 answer = left + right;
                 break;
@@ -30,9 +33,10 @@
               default:
                 break;
             }
-            stack.push(answer);
+            stack.push(answer); // 계산 결과 stack 에 반영
             continue;
           }
+          // 숫자의 경우 바로 스택에 등록
           stack.push(word);
         }
 

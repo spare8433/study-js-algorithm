@@ -9,11 +9,16 @@
         let answer = 0;
         let stack = [];
 
+        // 크레인 작동 배열만큼 반복
+        // 배열로 보면 N번째 배열에 x 번 째 index 를 의미 : board[N][x]
+        // 2차원 배열을 N * N 형태의 격자판으로 볼때 x 는 말그대로 x 좌표같은 의미
+        // y 는 N 번 배열을 의미 y 좌표를 의미하기도 한다.
         moves.forEach((mv, i, arr) => {
           let x = mv - 1;
 
           for (let y = 0; y < board.length; y++) {
             if (board[y][x] !== 0) {
+              // 0 이 아닌 수 라면 집을 인형임을
               let tmp = board[y][x];
               board[y][x] = 0;
               if (stack[stack.length - 1] === tmp) {
