@@ -10,11 +10,14 @@
           sum = 0;
         let answerArr = [];
 
+        // 배열 만큼 순회
         arr.forEach((element, index, array) => {
           let tmpArr = [];
           sum += element;
           tmpArr.push(element);
 
+          // index 번째 부터 배열의 마지막까지 순회하면서 임시로 배열에 저장하고 값들의 합 또한 저장한다.
+          // 숫자 합이 m 같아질때 결과 배열에 저장 m 보다 커지면 정지
           for (let i = index + 1; i < array.length; i++) {
             if (sum + array[i] > m) {
               break;
