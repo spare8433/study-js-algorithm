@@ -15,6 +15,7 @@
         for (let i = 0; i < arr.length; i++) {
           sum += arr[i];
 
+          // i 가 k 번까지 반복된 이후부터 앞의 매출액을 빼기시작
           if (i > k - 1) sum -= arr[lt++];
 
           if (sum > max) {
