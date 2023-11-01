@@ -16,6 +16,7 @@
           ["E", 0],
         ]);
 
+        // 투표 결과 반영
         for (const word of s) {
           candidateMap.set(word, candidateMap.get(word) + 1);
         }
@@ -28,12 +29,15 @@
         //   else sH.set(x, 1);
         // }
 
+        // 최다 투표 후보 찾기 위한 반복문
         candidateMap.forEach((value, key) => {
           if (value > max) {
             max = value;
             answer = key;
           }
         });
+
+        // 맵 결과
         console.log(candidateMap);
         return answer;
       }
