@@ -1,0 +1,34 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      function solution(arr) {
+        let answer = arr;
+
+        for (let i = 0; i < answer.length; i++) {
+          let tempIdx = i;
+          for (let j = i + 1; j < answer.length; j++) {
+            if (answer[tempIdx] > answer[j]) tempIdx = j;
+          }
+          let tempValue = answer[tempIdx];
+          answer[tempIdx] = answer[i];
+          answer[i] = tempValue;
+
+          // 답안지 일부 참고한 개선 부분
+          // 좌측 [arr[i], arr[tempIdx]] 부분은 각 배열의 주소를 나타내며 우측의 [arr[tempIdx], arr[i]] 배열의 값을 의미한다
+          // 우측의 배열을 좌측에 배열에 구조분해 할당 하여 집어넣는 형태의 코드
+
+          // [arr[i], arr[tempIdx]] = [arr[tempIdx], arr[i]];
+        }
+
+        return answer;
+      }
+
+      let arr = [13, 5, 11, 7, 23, 15];
+      console.log(solution(arr));
+    </script>
+  </body>
+</html>
