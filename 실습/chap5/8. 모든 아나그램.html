@@ -5,52 +5,82 @@
   </head>
   <body>
     <script>
+      // 두 Map 을 동일 여후 확인 함수
       function compareMaps(mapS, mapT) {
         let result = true;
-        // for (let i = 0; i < array.length; i++) {
-        //   if (!!mapS.get(key) || value !== mapS.get(key)) {
-        //     return false;
-        //   }
-        // }
-        console.log(mapS);
+
+        // mapT 길이 만큼 순회
         mapT.forEach((value, key) => {
-          if (mapS.get(key) === undefined || value !== mapS.get(key)) {
+          if (mapS.get(key) === undefined || value !== mapS.get(key))
             result = false;
-          }
         });
 
-        console.log(result);
         return result;
       }
 
       function solution(s, t) {
         let answer = 0;
-        let answerArray = [];
+        let answerArray = []; // 부분 문자열 확인용 배열
         let lt = 0;
         let mapS = new Map();
         let mapT = new Map();
 
+        // 문자열 t 를 mapT 로 세팅
         for (const word of t) {
           mapT.has(word)
             ? mapT.set(word, mapT.get(word) + 1)
             : mapT.set(word, 1);
         }
 
+        // 문자열 s 를 순회
         for (let i = 0; i < s.length; i++) {
+          // 현재 인덱스 문자를 mapS 에 추가
           mapS.has(s[i])
             ? mapS.set(s[i], mapS.get(s[i]) + 1)
             : mapS.set(s[i], 1);
 
-          if (i > t.length - 1) {
+          // 최소 t 문자열 길이보다 초과해서 반복문이 진행된 이후 lt 번째 문자의 내용을 제외
+          if (i >= t.length) {
             mapS.set(s[lt], mapS.get(s[lt]) - 1);
             lt++;
           }
 
+          // 최소 t 문자열 길이 이상으로 진행된 이후 아나그램 여부 확인해 정답배열에 저장
           if (i >= t.length - 1 && compareMaps(mapS, mapT)) {
             answerArray.push(s.slice(lt, i + 1));
             answer++;
           }
         }
+
+        // 답안지 내용 참고 개선가능 부분
+        // let len = t.length - 1;
+
+        // // 최소 t 문자열 길이 - 1 만큼 mapS 를 채우고 시작
+        // for (let i = 0; i < len; i++) {
+        //   mapS.has(s[i])
+        //     ? mapS.set(s[i], mapS.get(s[i]) + 1)
+        //     : mapS.set(s[i], 1);
+        // }
+
+        // for (let i = len; i < s.length; i++) {
+        //   // 현재 인덱스 문자를 mapS 에 추가
+        //   mapS.has(s[i])
+        //     ? mapS.set(s[i], mapS.get(s[i]) + 1)
+        //     : mapS.set(s[i], 1);
+
+        //   // 아나그램 여부 확인해 정답배열에 저장
+        //   if (i >= t.length - 1 && compareMaps(mapS, mapT)) {
+        //     answerArray.push(s.slice(lt, i + 1));
+        //     answer++;
+        //   }
+
+        //   // lt 번째 문자의 내용을 제외
+        //   if (i >= t.length) {
+        //     mapS.set(s[lt], mapS.get(s[lt]) - 1);
+        //     lt++;
+        //   }
+        // }
+
         console.log(answerArray);
         return answer;
       }
