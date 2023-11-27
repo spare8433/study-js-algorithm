@@ -9,16 +9,20 @@
         let answer;
         let stack = [];
 
+        // 문자열만큼 순회
         for (let i = 0; i < s.length; i++) {
           let word = s[i];
 
+          // 현재 문자가 ")" 인 경우
           if (word === ")") {
             let j = stack.length - 1;
 
+            // 현재 스택에서 부터 "("  나오기 전까지의 문자를 삭제
             while (stack[j--] !== "(") {
               stack.pop();
             }
 
+            // "(" 문자 추출
             stack.pop();
             continue;
           }
@@ -26,13 +30,16 @@
           stack.push(word);
           console.log(stack);
         }
+
+        // 답안지 참고 간소화 버전
         // for (let x of s) {
         //   if (x === ")") {
         //     while (stack.pop() !== "(");
         //   } else stack.push(x);
         // }
-        answer = stack.join("");
 
+        // 문자열로 치환
+        answer = stack.join("");
         return answer;
       }
 
