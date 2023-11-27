@@ -1,0 +1,28 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      function solution(arr) {
+        let plus = [];
+        let minus = [];
+        let answer = [];
+
+        // 양의 정수와 음의 정수 각각 배열에 추가
+        for (let i = 0; i < arr.length; i++) {
+          if (arr[i] > 0) plus.push(arr[i]);
+          else minus.push(arr[i]);
+        }
+
+        // 합치는 과정
+        answer = [...minus, ...plus];
+        return answer;
+      }
+
+      let arr = [1, 2, 3, -3, -2, 5, 6, -6];
+      console.log(solution(arr));
+    </script>
+  </body>
+</html>
