@@ -15,9 +15,9 @@
           if (regex.test(word)) {
             let right = parseInt(stack.pop()); // 좌측 숫자
             let left = parseInt(stack.pop()); // 우측 숫자
-            switch (
-              word // 계산
-            ) {
+
+            // 계산 진행
+            switch (word) {
               case "+":
                 answer = left + right;
                 break;

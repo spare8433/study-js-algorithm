@@ -18,9 +18,12 @@
 
           for (let y = 0; y < board.length; y++) {
             if (board[y][x] !== 0) {
-              // 0 이 아닌 수 라면 집을 인형임을
+              // 0 이 아닌 수 라면 집을 인형임을 의미하고 인형인 경우 tmp 에 저장
               let tmp = board[y][x];
+              // 인형 빼고 0 으로 처리
               board[y][x] = 0;
+
+              // 같은 인형이면 stack 에서 제외하고 터진 인형갯수 반영
               if (stack[stack.length - 1] === tmp) {
                 stack.pop();
                 answer += 2;
@@ -29,7 +32,9 @@
               break;
             }
           }
-          console.log(stack);
+          console.log(
+            `${i} 번째 크레인 작동 후 바구니(stack) 상황: [${stack}] 점수: ${answer}`
+          );
         });
 
         return answer;

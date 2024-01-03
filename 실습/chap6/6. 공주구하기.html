@@ -5,6 +5,7 @@
   </head>
   <body>
     <script>
+      // 일반적인 배열을 수정해나가는 방식
       function solution(n, k) {
         let answer;
         let arr = Array.from({ length: n }, (v, i) => i + 1);
@@ -12,7 +13,7 @@
 
         // 배열의 길이 - 1 만큼 순회
         for (let index = 1; index < n; index++) {
-          //arr.splice(current, 1) 왕좌를 제외하여 배열을 변경
+          //arr.splice(current, 1) 왕자를 제외하여 배열을 변경
           console.log("### 제외된 왕자 번호", arr.splice(current, 1));
           console.log("### 현재 배열 상황", arr);
 
@@ -33,24 +34,28 @@
       }
 
       // que 를 활용한 방법 (답안지 내용)
-      //   function solution(n, k) {
-      //     let answer;
-      //     let queue = Array.from({ length: n }, (v, i) => i + 1);
+      // function solution(n, k) {
+      //   let answer;
+      //   let queue = Array.from({ length: n }, (v, i) => i + 1);
 
-      //     // 아이디어
-      //     // 원형 큐라고 생각하고 front(삭제위치) 의 k 번째 전까지 왕자를 다시 rare(삽입위치) 에 붙인다.
-      //     // k 번째 왕자는 제외된 후 그다음 새로운 front 에서 마찬가지로 위 과정을 반복하다.
-      //     // 예) [1,2,3,4,5] -> [3,4,5,1,2] 선형 배열구조를 원형으로 생각하면 결국 1번부터 5번까지 왕자들의 순서는 바뀌지 않는다
-      //     while (queue.length) {
-      //       // k 번째 전까지 제외하고 다시 배열의 마지막에 붙임
-      //       for (let i = 1; i < k; i++) queue.push(queue.shift());
-      //       queue.shift(); // k 번째 왕자 제외
-
-      //       // 마지막 남은 왕자 저장
-      //       if (queue.length === 1) answer = queue.shift();
+      //   // 아이디어
+      //   // 원형 큐라고 생각하고 front(삭제위치) 의 k 번째 전까지 왕자를 다시 rare(삽입위치) 에 붙인다.
+      //   // k 번째 왕자는 제외된 후 그다음 새로운 front 에서 마찬가지로 위 과정을 반복하다.
+      //   // 예) [1,2,3,4,5] -> [3,4,5,1,2] 선형 배열구조를 원형으로 생각하면 결국 1번부터 5번까지 왕자들의 순서는 바뀌지 않는다
+      //   while (queue.length) {
+      //     // k 번째 전까지 제외하고 다시 배열의 마지막에 붙임
+      //     for (let i = 1; i < k; i++) {
+      //       queue.push(queue.shift());
+      //       console.log("위치조정: ", queue);
       //     }
-      //     return answer;
+      //     // 위과정에서 k - 1 번 만큼 위치를 조정했기 때문에 현재 queue 배열에 첫번째 왕자가 k 번째 왕자를 의미하므로 제외시킨다.
+      //     console.log(`k 번째 왕자 '${queue.shift()}' 제외 후 결과: `, queue);
+
+      //     // 모두제외되고 마지막 남은 왕자번호를 저장
+      //     if (queue.length === 1) answer = queue.shift();
       //   }
+      //   return answer;
+      // }
 
       console.log(solution(8, 3));
     </script>

@@ -5,9 +5,14 @@
   </head>
   <body>
     <script>
+      // 버블 정렬: 인접한 두 원소를 비교하며 자리를 바꿔 결국 순서대로 정렬하는 방식
       function solution(arr) {
         let answer = arr;
+
+        // 문자열 길이 만큼 순회 시작 값은 마지막 값부터 하나씩 줄여가 0 까지 진행
         for (let i = answer.length - 1; i >= 0; i--) {
+          // 0번째 값을 기준으로 i 번째까지 값을 비교해가며 값을 교환하는 반복과정
+          // 최종적으로 i 번째 값은 가장 큰 숫자가 오게된다.
           let left = answer[0];
           for (let j = 1; j <= i; j++) {
             if (left > answer[j]) {
