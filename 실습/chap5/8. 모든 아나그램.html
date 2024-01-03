@@ -69,16 +69,14 @@
         //     : mapS.set(s[i], 1);
 
         //   // 아나그램 여부 확인해 정답배열에 저장
-        //   if (i >= t.length - 1 && compareMaps(mapS, mapT)) {
+        //   if (compareMaps(mapS, mapT)) {
         //     answerArray.push(s.slice(lt, i + 1));
         //     answer++;
         //   }
 
         //   // lt 번째 문자의 내용을 제외
-        //   if (i >= t.length) {
-        //     mapS.set(s[lt], mapS.get(s[lt]) - 1);
-        //     lt++;
-        //   }
+        //   mapS.set(s[lt], mapS.get(s[lt]) - 1);
+        //   lt++;
         // }
 
         console.log(answerArray);
