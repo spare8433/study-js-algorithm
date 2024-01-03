@@ -1,0 +1,45 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      function solution(size, arr) {
+        let answer = Array(size).fill(0);
+
+        // 작업 번호 배열만큼 순회
+        // element: 할당된 작업번호
+
+        arr.forEach((element) => {
+          // tempIdx : 캐시에 존재하는 배열 인덱스
+          let tempIdx = answer.indexOf(element);
+          // 캐시에 있는경우
+          if (tempIdx >= 0) {
+            // tempIdx 앞에 숫자들을 한칸씩 뒤로 땡김
+            for (let i = tempIdx; i >= 1; i--) {
+              answer[i] = answer[i - 1];
+            }
+          }
+          // 캐시에 없는경우
+          else {
+            // 해당 인덱스 앞에 숫자들을 한칸씩 뒤로 땡김
+            for (let i = size - 1; i >= 1; i--) {
+              answer[i] = answer[i - 1];
+            }
+          }
+          // 맨앞의 숫자를 해당 할당된 작업번호로 설정
+          answer[0] = element;
+
+          // 캐시 메모리 상태 변화 출력
+          console.log("캐시 메모리 상태 변화 출력: ", answer);
+        });
+
+        return answer;
+      }
+
+      let arr = [1, 2, 3, 2, 6, 2, 3, 5, 7];
+      console.log(solution(5, arr));
+    </script>
+  </body>
+</html>

@@ -1,0 +1,56 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      // 삽입 정렬: 각 원소를 적절한 위치에 직접 삽입하여 정렬하는 방식
+      function solution(arr) {
+        let answer = arr;
+
+        // 2번째 숫자부터 순회
+        for (let i = 1; i < answer.length; i++) {
+          let temp = answer[i];
+
+          // i - 1 번 숫자 j 부터 i 번째 숫자 temp 와 비교해 크다면
+          // j + 1 번째 숫자는 j 번째 숫자가 되고 작다면 숫자 temp 가 되고 break
+          // 마지막 번호 까지 진행될 때 까지 break 되지 않았다면 가장 작은 숫자이므로 첫번째 숫자는 temp 가 됨
+          for (let j = i - 1; j >= 0; j--) {
+            if (answer[j] > temp) {
+              answer[j + 1] = answer[j];
+            } else {
+              answer[j + 1] = temp;
+              break;
+            }
+
+            if (j === 0) answer[0] = temp;
+          }
+        }
+        return answer;
+      }
+
+      // 답안지 참고 개선버전
+      // 이전과 달리 두번째 for 문이 끝나고 나서 바로 temp 값의 위치가 정해짐
+      //   function solution(arr) {
+      //     let answer = arr;
+
+      //     for (let i = 1; i < answer.length; i++) {
+      //       let temp = answer[i],
+      //         j;
+      //       for (j = i - 1; j >= 0; j--) {
+      //         if (answer[j] > temp) {
+      //           answer[j + 1] = answer[j];
+      //         } else break;
+      //       }
+      //       answer[j + 1] = temp;
+      //     }
+      //     return answer;
+      //   }
+
+      let arr = [11, 7, 5, 6, 10, 9];
+      //   let arr = [11, 7, 5, 6, 10, 9, 20, 0, 2, 13];
+      console.log(solution(arr));
+    </script>
+  </body>
+</html>
