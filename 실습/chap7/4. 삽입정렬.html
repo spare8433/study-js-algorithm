@@ -8,6 +8,7 @@
       // 삽입 정렬: 각 원소를 적절한 위치에 직접 삽입하여 정렬하는 방식
       function solution(arr) {
         let answer = arr;
+        console.log("초기값", ...arr);
 
         // 2번째 숫자부터 순회
         for (let i = 1; i < answer.length; i++) {
@@ -24,8 +25,13 @@
               break;
             }
 
-            if (j === 0) answer[0] = temp;
+            if (j === 0) {
+              console.log(`기준값 {${temp}} 진행상황`, ...arr);
+              answer[0] = temp;
+            }
+            console.log(`기준값 {${temp}} 진행상황`, ...arr);
           }
+          console.log(`현재 ${i} 번째 정렬된 값:`, ...arr);
         }
         return answer;
       }
