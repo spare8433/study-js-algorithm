@@ -1,0 +1,43 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      function solution(arr) {
+        let answer = [];
+        let sortedArr = [...arr].sort((a, b) => a - b);
+
+        console.log("입력된 초기 배열: ", arr);
+        console.log("정렬된 배열: ", sortedArr);
+
+        // 두 배열을 i 번째 값들을 비교하여 다른 경우만 정답 배열에 추가
+        arr.forEach((num, i) => {
+          if (sortedArr[i] !== num) answer.push(i + 1);
+        });
+
+        // 오답 노트
+        // let firstIdx = -1;
+        // let secondIdx = -1;
+        // for (let i = 0; i < arr.length - 1; i++) {
+        //   if (firstIdx < 0 && arr[i] > arr[i + 1]) {
+        //     firstIdx = i;
+        //     answer.push(firstIdx + 1);
+        //   }
+
+        //   if (firstIdx > 0 && arr[i] < arr[firstIdx]) {
+        //     secondIdx = i;
+        //   }
+        // }
+        // answer.push(secondIdx + 1);
+        return answer;
+      }
+
+      let arr1 = [120, 125, 152, 130, 135, 135, 143, 127, 160];
+      let arr2 = [120, 130, 150, 150, 130, 150];
+      console.log(solution(arr1));
+      console.log(solution(arr2));
+    </script>
+  </body>
+</html>
