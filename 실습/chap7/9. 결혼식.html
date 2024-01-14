@@ -1,0 +1,71 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      function solution(times) {
+        // 동시 입장 최대 존재 인원 체크를 위한 변수
+        let answer = Number.MIN_SAFE_INTEGER;
+        // 현재 식장 존재 인원을 나타낼 변수
+        let currentCount = 0;
+
+        // 기존 2차원 배열에서 오는 시간과 가는 시간으로 각각 구분하여 오름차순 정렬한 뒤 저장
+        let startTimeArr = times.map((t) => t[0]).sort((a, b) => a - b);
+        let endTimeArr = times.map((t) => t[1]).sort((a, b) => a - b);
+        // 오는 시간과 가는 시간을 특정 시간에 입출입 여부를 카운트할 때 사용할 각각의 index 변수
+        startIdx = 0;
+        endIdx = 0;
+
+        // 가장 빠른 입장 시간부터 가장 늦은 퇴장 시간까지 1씩 증가하는 반복문
+        // 입장되는 인원 및 퇴장하는 체크하는 시간(t) 와 비교해서 일치할 경우 입장의 경우 현재 인원(currentCount) 1 증가 퇴장의 경우 1 감소
+        // 입출입 인원들 체크가 완료된 후 현재 인원(currentCount)가 최대 존재 인원 수(answer) 를 넘어가는 경우에 반영
+        for (let t = startTimeArr[0]; t <= endTimeArr.at(-1); t++) {
+          console.log(t, endIdx);
+          if (startTimeArr[startIdx] === t) {
+            currentCount++;
+            startIdx++;
+          }
+          if (endTimeArr[endIdx] === t) {
+            currentCount--;
+            endIdx++;
+          }
+          answer = Math.max(answer, currentCount);
+        }
+        return answer;
+      }
+
+      // 정답지 방법
+      // 입장 시간과 퇴장 시간을 한 배열에 구분해서 저장 후 정렬하는 과정을 거쳐 배열의 요소들을 순회하면서 입장과 퇴장여부에 따라 현재 입장 인원을 체크
+      function solution(times) {
+        let answer = Number.MIN_SAFE_INTEGER;
+        let T_line = [];
+        for (let x of times) {
+          T_line.push([x[0], "s"]);
+          T_line.push([x[1], "e"]);
+        }
+        T_line.sort((a, b) => {
+          if (a[0] === b[0]) return a[1].charCodeAt() - b[1].charCodeAt();
+          else return a[0] - b[0];
+        });
+        let cnt = 0;
+        for (let x of T_line) {
+          if (x[1] === "s") cnt++;
+          else cnt--;
+          answer = Math.max(answer, cnt);
+        }
+        return answer;
+      }
+
+      let arr = [
+        [14, 18],
+        [12, 15],
+        [15, 20],
+        [20, 30],
+        [5, 14],
+      ];
+      console.log(solution(arr));
+    </script>
+  </body>
+</html>
