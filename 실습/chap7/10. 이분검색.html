@@ -1,0 +1,71 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      function solution(target, arr) {
+        let answer = null;
+        // 숫자들을 오름차순 정렬 후 순서에 맞는 번호를 1 부터 차례로 부여해 배열로 저장
+        let sortArr = arr
+          .sort((a, b) => a - b)
+          .map((num, index) => [num, index + 1]);
+
+        console.log(sortArr);
+
+        // 배열의 값이 하나 남을 때 까지 반복
+        while (sortArr.length > 0) {
+          let centerIdx = Math.floor(sortArr.length / 2); // 기준이 될 인덱스
+          const [num, index] = sortArr[centerIdx]; // 기준이 될 숫자와 번호
+
+          console.log(`기준 인덱스:${centerIdx} 기준 값 ${num}`);
+
+          if (num > target) {
+            sortArr = sortArr.slice(0, centerIdx); // 배열의 0번부터 기준값 이전의 값까지 잘라내 저장
+            console.log("# 기준값 이전의 배열", sortArr);
+          } else if (num < target) {
+            sortArr = sortArr.slice(centerIdx + 1); // 기준값 다음 번호부터 배열의 마지막 번호까지 잘라내 저장
+            console.log("# 기준값 이후의 배열", centerIdx, sortArr);
+          } else {
+            answer = index;
+            console.log("# 위치 특정 완료");
+            break;
+          }
+        }
+        return answer;
+      }
+
+      // 정답지 방법
+      //   function solution(target, arr) {
+      //     let answer;
+      //     // 숫자들을 오름차순 정렬
+      //     arr.sort((a, b) => a - b);
+
+      //     // lt 시작 인덱스, rt 끝 인덱스
+      //     let lt = 0,
+      //       rt = arr.length - 1;
+
+      //     // 시작 인덱스와 끝 인덱스 사이의 값이 존재할 때 까지 반복
+      //     while (lt <= rt) {
+      //       // 시작 인덱스 값과 끝 인덱스 값을 2 로 나눠 기준이될 중앙 인덱스 mid 을 설정
+      //       let mid = parseInt((lt + rt) / 2);
+      //       // 기준값과 target 이 동일하다면 정답으로 간주 인덱스 값에 + 1 위치 번호를 저장
+      //       if (arr[mid] === target) {
+      //         answer = mid + 1;
+      //         break;
+      //       }
+      //       // 기준값이 target 보다 큰경우 끝 인덱스를 중앙인덱스에 - 1 로 저장
+      //       else if (arr[mid] > target) rt = mid - 1;
+      //       // 기준값이 target 보다 작은경우 시작 인덱스를 중앙인덱스에 + 1 로 저장
+      //       else lt = mid + 1;
+      //     }
+
+      //     return answer;
+      //   }
+
+      let arr = [23, 87, 65, 12, 57, 32, 99, 81];
+      console.log(solution(32, arr));
+    </script>
+  </body>
+</html>
