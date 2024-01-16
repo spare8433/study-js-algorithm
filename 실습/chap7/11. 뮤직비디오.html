@@ -55,47 +55,47 @@
       // 답안지 방식: 2진 탐색 결정 알고리즘
 
       // 입력된 DVD 용량(capacity)을 기준으로 곡을 등록한 후 사용된 DVD 갯수 반환하는 함수
-      function count(songs, capacity) {
-        // cnt: DVD 갯수 sum: 현재 DVD 용량
-        let cnt = 1,
-          sum = 0;
+      //   function count(songs, capacity) {
+      //     // cnt: DVD 갯수 sum: 현재 DVD 용량
+      //     let cnt = 1,
+      //       sum = 0;
 
-        // 전체곡 배열을 순회
-        for (let x of songs) {
-          // 입력된 DVD 용량을 넘어가면 cnt 를 1 증가하고 sum 을 x 로 초기화
-          if (sum + x > capacity) {
-            cnt++;
-            sum = x;
-          } else sum += x; // 입력된 DVD 용량을 넘어가지 않는다면 sum 에 x 를 더함
-        }
-        return cnt;
-      }
+      //     // 전체곡 배열을 순회
+      //     for (let x of songs) {
+      //       // 입력된 DVD 용량을 넘어가면 cnt 를 1 증가하고 sum 을 x 로 초기화
+      //       if (sum + x > capacity) {
+      //         cnt++;
+      //         sum = x;
+      //       } else sum += x; // 입력된 DVD 용량을 넘어가지 않는다면 sum 에 x 를 더함
+      //     }
+      //     return cnt;
+      //   }
 
-      function solution(m, songs) {
-        let answer;
-        // 가능한 DVD 용량의 최소 기준값을 의미하며 곡의 최대 길이로 초기화
-        let lt = Math.max(...songs);
-        // 가능한 DVD 용량의 최대 기준값을 최대 DVD 용량으로 초기화
-        // 최대 DVD 용량은 곡의 길이가 자연수로 최소 길이는 1 이므로 가능한 최대의 DVD 용량에 전체 플레이 타임에 배열의길이에 -1 만큼을 뺀 값이다.
-        let rt = songs.reduce((a, b) => a + b, 0) - songs.length - 1;
+      //   function solution(m, songs) {
+      //     let answer;
+      //     // 가능한 DVD 용량의 최소 기준값을 의미하며 곡의 최대 길이로 초기화
+      //     let lt = Math.max(...songs);
+      //     // 가능한 DVD 용량의 최대 기준값을 최대 DVD 용량으로 초기화
+      //     // 최대 DVD 용량은 곡의 길이가 자연수로 최소 길이는 1 이므로 가능한 최대의 DVD 용량에 전체 플레이 타임에 배열의길이에 -1 만큼을 뺀 값이다.
+      //     let rt = songs.reduce((a, b) => a + b, 0) - songs.length - 1;
 
-        // lt 값이 rt 값 보다 작아질 때까지 즉 2진 탐색이 마무리 된 경우
-        while (lt <= rt) {
-          // 가능한 DVD 용량의 중앙 값
-          let mid = parseInt((lt + rt) / 2); // let mid = Math.floor((lt + rt) / 2);
-          console.log(`# 중앙값: ${mid}  lt: ${lt}  rt: ${rt}`);
-          // count 함수를 통해 중앙값을 기준으로 사용된 DVD 갯수를 반환해 대소 여부 판단
-          // m 보다 작거나 같다면 용량이 부족하지 않고 정답에 해당할 수 있지만 DVD 용량을 더 줄일 수 있는 가능성이 있음으로 일단
-          //  anwer 에 현재 값을 저장해 두고 mid 보다 작은 DVD 용량으로 시도하기위해 rt 값을 mid - 1 로 저장
-          if (count(songs, mid) <= m) {
-            answer = mid;
-            rt = mid - 1;
-          }
-          // m 보다 크다면 사용된 DVD 갯수를 줄이기 위해 mid 보다 큰 DVD 용량이 필요하므로 lt 값을 mid + 1 로 저장
-          else lt = mid + 1;
-        }
-        return answer;
-      }
+      //     // lt 값이 rt 값 보다 작아질 때까지 즉 2진 탐색이 마무리 된 경우
+      //     while (lt <= rt) {
+      //       // 가능한 DVD 용량의 중앙 값
+      //       let mid = parseInt((lt + rt) / 2); // let mid = Math.floor((lt + rt) / 2);
+      //       console.log(`# 중앙값: ${mid}  lt: ${lt}  rt: ${rt}`);
+      //       // count 함수를 통해 중앙값을 기준으로 사용된 DVD 갯수를 반환해 대소 여부 판단
+      //       // m 보다 작거나 같다면 용량이 부족하지 않고 정답에 해당할 수 있지만 DVD 용량을 더 줄일 수 있는 가능성이 있음으로 일단
+      //       //  anwer 에 현재 값을 저장해 두고 mid 보다 작은 DVD 용량으로 시도하기위해 rt 값을 mid - 1 로 저장
+      //       if (count(songs, mid) <= m) {
+      //         answer = mid;
+      //         rt = mid - 1;
+      //       }
+      //       // m 보다 크다면 사용된 DVD 갯수를 줄이기 위해 mid 보다 큰 DVD 용량이 필요하므로 lt 값을 mid + 1 로 저장
+      //       else lt = mid + 1;
+      //     }
+      //     return answer;
+      //   }
 
       let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
       console.log(solution(3, arr));
