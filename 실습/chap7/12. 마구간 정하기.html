@@ -1,0 +1,110 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      function solution(c, stable) {
+        let answer = -1;
+        let sortArr = stable.sort((a, b) => a - b);
+        let lt = sortArr[0],
+          rt = sortArr.at(-1);
+
+        while (lt <= rt) {
+          let cnt = Math.ceil((rt + lt) / 2); // 중앙값이자 마구간 배치거리의 기준값 변수
+          let prevStable = sortArr[0]; // 다음 배치할 마구간과 비교할 이전 마굿간의 좌표값 변수
+          let count = c - 1; // 배치할 말들의 현재 갯수(가장 가까운 마구간에 말을 배치한 상태로 시작해 - 1) 변수
+
+          console.log(
+            `# 마구간 배치 전 lt: ${lt}  rt: ${rt}  cnt: ${cnt}  answer: ${answer}`
+          );
+
+          // 첫번째 마구간 제외 모든 마구간 순회
+          for (let i = 1; i < sortArr.length; i++) {
+            // 다음 배치할 마굿간과 이전 마구간의 거리가 기준값이 되는 cnt 값과 같거나 크다면 말을 배치(count--)
+            // 말을 배치했음으로 prevStable 값은 현재 마구간 위치로 변경
+            if (sortArr[i] - prevStable >= cnt) {
+              count--;
+              prevStable = sortArr[i];
+            }
+
+            // 남은 마구간 갯수보다 말이 많이 남아있다면 조기종료
+            if (sortArr.length - i + 1 < count) break;
+
+            // 말 다 집어넣은 상황이므로 조기종료
+            if (count === 0) break;
+          }
+
+          console.log(
+            `# 마구간 배치 후 lt: ${lt}  rt: ${rt}  cnt: ${cnt}  count: ${count}`
+          );
+
+          // count 0 인 경우 즉 모든 말을 배치했으므로 임시로 cnt 값을 answer 에 저장
+          // 다시 최대 말의 거리를 찾아야 하므로 기준값을 늘리기 위해 lt 값을 cnt + 1 로 저장
+          if (count <= 0) {
+            answer = cnt;
+            lt = cnt + 1;
+          }
+          // 말을 다 집어넣지 못했음으로 기존 기준값을 줄여야 하므로 rt 값을 cnt - 1 로 줄임
+          else rt = cnt - 1;
+        }
+        return answer;
+      }
+
+      // 보완 버전
+
+      // 남은 말 갯수 반환하는 함수
+      // function checkStable(arr, cnt, c) {
+      //   let prevStable = arr[0]; // 다음 배치할 마구간과 비교할 이전 마굿간의 좌표값 변수
+      //   let count = c - 1; // 배치할 말들의 현재 갯수(가장 가까운 마구간에 말을 배치한 상태로 시작해 - 1) 변수
+
+      //   // 첫번째 마구간 제외 모든 마구간 순회
+      //   for (let i = 1; i < arr.length; i++) {
+      //     // 다음 배치할 마굿간과 이전 마구간의 거리가 기준값이 되는 cnt 값과 같거나 크다면 말을 배치(count--)
+      //     // 마을 배치했음으로 prevStable 값은 현재 마구간 위치로 변경
+      //     if (arr[i] - prevStable >= cnt) {
+      //       count--;
+      //       prevStable = arr[i];
+      //     }
+
+      //     // 남은 마구간 갯수보다 말이 많이 남아있다면 조기종료
+      //     if (arr.length - i + 1 < count) break;
+
+      //     // 말 다 집어넣은 상황이므로 조기종료
+      //     if (count === 0) break;
+      //   }
+      //   return count;
+      // }
+
+      // function solution(c, stable) {
+      //   let answer = -1;
+      //   let sortArr = stable.sort((a, b) => a - b);
+      //   let lt = sortArr[0],
+      //     rt = sortArr.at(-1);
+
+      //   while (lt <= rt) {
+      //     let cnt = Math.ceil((rt + lt) / 2); // 중앙값이자 마구간 배치거리의 기준값 변수
+
+      //     console.log(
+      //       `# 마구간 배치 전 lt: ${lt}  rt: ${rt}  cnt: ${cnt}  answer: ${answer}`
+      //     );
+
+      //     // 말 정상적으로 다 집어넣은 상황 가장 가까운 말의 거리를 정답에 저장후
+      //     // 다시 최대 말의 거리를 찾아야 하므로 기준값을 늘리기 위해 lt 값을 cnt + 1 로 저장
+      //     // 현재 배치한 가장 가까운 두 말의 거리와 지금까지의 최소거리 중 작은 값을 answer 에 저장
+      //     if (checkStable(sortArr, cnt, c) <= 0) {
+      //       answer = cnt;
+      //       lt = cnt + 1;
+      //       console.log("# 정상적으로 배치 후 거리값 저장", answer);
+      //     }
+      //     // 말을 다 집어넣지 못했음으로 기존 기준값을 줄여야 하므로 rt 값을 cnt - 1 로 줄임
+      //     else rt = cnt - 1;
+      //   }
+      //   return answer;
+      // }
+      let arr = [1, 2, 8, 4, 9];
+      console.log(solution(3, arr));
+    </script>
+  </body>
+</html>
