@@ -1,0 +1,182 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      // 업그레이드 버전
+      function solution(n, end) {
+        let preorderAnswer = "";
+        let inorderAnswer = "";
+        let postorderAnswer = "";
+
+        // 트리 생성부분
+        let tree = [];
+
+        let current = 1; // 현재 입력될 숫자를 의미
+
+        // n 부터 end 만큼 반복하면서 이진트리 생성 num 현재 노드를 의미
+        // tree 배열의 index - 1 와 노드의 값이 같아 index - 1 가 노드와 그 자식 노드를 의미한다.
+        for (let num = n; num <= end; num++) {
+          tree.push({
+            root: num,
+            l: current < end ? ++current : null,
+            r: current < end ? ++current : null,
+          });
+        }
+
+        // 전위 순회 업글 버전
+        function preorder(obj) {
+          // 현재 노드의 값을 정답 문자열에 추가
+          preorderAnswer += obj.root + " ";
+          console.log("# root", obj);
+
+          // 왼쪽 노드가 있다면 왼쪽노드를 활용해 재귀적으로 함수 호출
+          obj.l && preorder(tree[obj.l - 1]);
+
+          // 오른쪽 노드가 있다면 오른쪽노드를 활용해 재귀적으로 함수 호출
+          obj.r && preorder(tree[obj.r - 1]);
+        }
+
+        // 중위 순회 업글 버전
+        function inorder(obj) {
+          console.log("# root", obj);
+
+          // 왼쪽 노드가 있다면 왼쪽노드를 활용해 재귀적으로 함수 호출
+          obj.l && inorder(tree[obj.l - 1]);
+
+          // 현재 노드의 값을 정답 문자열에 추가
+          inorderAnswer += obj.root + " ";
+
+          // 오른쪽 노드가 있다면 오른쪽노드를 활용해 재귀적으로 함수 호출
+          obj.r && inorder(tree[obj.r - 1]);
+        }
+
+        // 후위 순회
+        function postorder(obj) {
+          console.log("# root", obj);
+
+          // 왼쪽 노드가 있다면 왼쪽노드를 활용해 재귀적으로 함수 호출
+          obj.l && postorder(tree[obj.l - 1]);
+
+          // 오른쪽 노드가 있다면 오른쪽노드를 활용해 재귀적으로 함수 호출
+          obj.r && postorder(tree[obj.r - 1]);
+
+          // 현재 노드의 값을 정답 문자열에 추가
+          postorderAnswer += obj.root + " ";
+        }
+
+        console.log(tree);
+
+        preorder(tree[0]);
+        console.log("전위순회 출력 : " + preorderAnswer);
+
+        inorder(tree[0]);
+        console.log("중위순회 출력 : " + inorderAnswer);
+
+        postorder(tree[0]);
+        console.log("후위순회 출력 : " + postorderAnswer);
+      }
+      solution(1, 7);
+
+      // 초창기 버전
+      // function solution(n, end) {
+      //   let answer = "";
+
+      //   // 트리 생성
+      //   let tree = [{ head: 0, l: 1 }];
+      //   let current = 1; // 현재 입력될 숫자를 의미
+
+      //   // n 부터 end 만큼 반복하면서 이진트리 생성 num 현재 노드를 의미
+      //   // tree 배열의 index 와 노드의 값이 같아 index 가 노드와 그 자식 노드를 의미한다.
+      //   for (let num = n; current < end; num++) {
+      //     tree.push({
+      //       root: num,
+      //       l: current < end ? ++current : null,
+      //       r: current < end ? ++current : null,
+      //     });
+      //   }
+
+      //   // 전위 순회
+      //   function front(obj) {
+      //     // 노드가 채워지 있지 않은 경우 최상위 노드 1 정답 문자열에 추가
+      //     if (obj.head) answer += obj.l;
+      //     console.log("# root", obj);
+
+      //     // 왼쪽 노드를 정답 문자열에 추가
+      //     answer += obj.l ? obj.l + " " : "";
+      //     // 왼쪽 노드 존재한다면 왼쪽노드를 활용해 재귀적으로 함수 호출
+      //     if (tree[obj.l]) {
+      //       console.log("# l", tree[obj.l]);
+      //       front(tree[obj.l]);
+      //     }
+
+      //     // 오른쪽 노드를 정답 문자열에 추가
+      //     answer += obj.r ? obj.r + " " : "";
+      //     // 오른쪽 노드 존재한다면 왼쪽노드를 활용해 재귀적으로 함수 호출
+      //     if (tree[obj.r]) {
+      //       console.log("# r", tree[obj.r]);
+      //       front(tree[obj.r]);
+      //     }
+      //   }
+
+      //   // 후위 순회
+      //   function back(obj) {
+      //     // 노드가 채워지 있지 않은 경우 최상위 노드 1 정답 문자열에 추가
+      //     if (obj.head) answer += obj.l;
+      //     console.log("# root", obj);
+
+      //     // 왼쪽 노드를 정답 문자열에 추가
+      //     if (tree[obj.l]) {
+      //       console.log("# l", tree[obj.l]);
+      //       back(tree[obj.l]);
+      //     }
+      //     // 왼쪽 노드 존재한다면 왼쪽노드를 활용해 재귀적으로 함수 호출
+      //     answer += obj.l ? obj.l + " " : "";
+
+      //     // 오른쪽 노드 존재한다면 왼쪽노드를 활용해 재귀적으로 함수 호출
+      //     if (tree[obj.r]) {
+      //       console.log("# r", tree[obj.r]);
+      //       back(tree[obj.r]);
+      //     }
+      //     // 오른쪽 노드를 정답 문자열에 추가
+      //     answer += obj.r ? obj.r + " " : "";
+      //   }
+
+      //   console.log(tree);
+      //   front(tree[0]);
+      //   // back(tree[0]);
+      //   return answer;
+      // }
+      // console.log(solution(1, 7));
+
+      // 정답지 방법
+      // function solution(n, end) {
+      //   let answer = "";
+      //   function DFS(v) {
+      //     if (v > end) return;
+      //     else {
+      //       // 전위순회
+      //       answer += v + " ";
+      //       DFS(v * 2);
+      //       DFS(v * 2 + 1);
+
+      //       // 중위순회
+      //       // DFS(v * 2);
+      //       // answer += v + " ";
+      //       // DFS(v * 2 + 1);
+
+      //       // 후위순회
+      //       // DFS(v * 2);
+      //       // DFS(v * 2 + 1);
+      //       // answer += v + " ";
+      //     }
+      //   }
+      //   DFS(n);
+      //   return answer;
+      // }
+      // console.log(solution(1, 7));
+    </script>
+  </body>
+</html>

@@ -1,0 +1,24 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      function solution(n) {
+        let answer = "";
+        function recursionFn(n) {
+          if (n === 0) return;
+          else {
+            recursionFn(Math.floor(n / 2));
+            answer += String(n % 2);
+          }
+        }
+        recursionFn(n);
+        return answer;
+      }
+
+      console.log(solution(11));
+    </script>
+  </body>
+</html>
