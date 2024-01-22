@@ -9,14 +9,16 @@
       function solution(n) {
         let answer = [];
 
+        // 부분집합을 나타낼 str 매개변수를 빈 문자열로 초기화
         function DFS(L, str = "") {
-          // 모든 원소를 거친 이후 문자열을 정답 배열에 추가
+          // 모든 원소를 거친 이후(현재 원소값 L 이 n 을 넘어가는 경우)에
+          // 문자열이 비어있는 경우(공집합인 경우)를 제외하고 최종적으로 완성된 문자열을 배열에 추가하고 함수 종료
           if (L > n) return str && answer.push(str);
 
-          // 현재 값 L 포함된 부분집합의 경우로 L 값이 추가된 문자열을 재귀 함수로 처리
+          // 현재 원소값 L이 포함된 부분집합의 경우로 L 값이 추가된 문자열 str 과 L + 1 인자로 재귀 함수 호출
           DFS(L + 1, str + L);
 
-          // 현재 값 L 포함되지 않은 부분집합의 경우로 L 값이 포함되지 않은 문자열을 재귀 함수로 처리
+          // 현재 값 L 포함되지 않은 부분집합의 경우로 L 값이 추가되지 않은 문자열 str 과 L + 1 인자로 재귀 함수 호출
           DFS(L + 1, str);
         }
         DFS(1);
@@ -24,41 +26,38 @@
       }
 
       // 정답지 방법
+      //   function solution(n) {
+      //     let answer = [];
+      //     // n + 1 길이의 체크 배열(ch)을 생성하고 0 으로 모두 초기화
+      //     // (값이 0 : 원소가 부분집합에 있지 않은 경우, 값이 : 1 원소가 부분집합에 있는 경우)
+      //     let ch = Array.from({ length: n + 1 }, () => 0);
 
-      // 재귀함수가 마무리 되고 최종 정답 배열을 반환
-      function solution(n) {
-        let answer = [];
-        // n + 1 길이의 체크 배열(ch)을 생성하고 0 으로 모두 초기화
-        // (값이 0 : 원소가 부분집합에 있지 않은 경우, 값이 : 1 원소가 부분집합에 있는 경우)
-        let ch = Array.from({ length: n + 1 }, () => 0);
+      //     // 현재 원소값 L 이 n + 1 이 되는 경우 재귀함수를 종료
+      //     function DFS(L) {
+      //       if (L === n + 1) {
+      //         let tmp = "";
 
-        // 현재 원소 L 값이 현재 원소값 L 이 n + 1 이 되는 경우 재귀함수를 종료
+      //         // ch[L] 값이 1인 경우 그 배열의 인덱스값을 문자열(tmp)에 추가하며
+      //         for (let i = 1; i <= n; i++) {
+      //           if (ch[i] === 1) tmp += i + " ";
+      //         }
 
-        function DFS(L) {
-          if (L === n + 1) {
-            let tmp = "";
+      //         // 문자열이 비어있는 경우(공집합인 경우)를 제외하고 최종적으로 완성된 문자열을 배열에 추가
+      //         if (tmp.length > 0) answer.push(tmp.trim());
+      //       }
+      //       // 체크 배열에 L번째(ch[L]) 값이 0인 경우와 1인 경우로 나누어 재귀 함수 호출
+      //       else {
+      //         ch[L] = 1;
+      //         DFS(L + 1);
+      //         ch[L] = 0;
+      //         DFS(L + 1);
+      //       }
+      //     }
+      //     DFS(1);
+      //     return answer;
+      //   }
 
-            // ch[L] 값이 1인 경우 그 배열의 인덱스값을 문자열(tmp)에 추가하며
-            for (let i = 1; i <= n; i++) {
-              if (ch[i] === 1) tmp += i + " ";
-            }
-
-            // 문자열이 비어있는 경우 즉 공집합인 경우를 제외하고 최종적으로 완성된 문자열을 배열에 추가
-            if (tmp.length > 0) answer.push(tmp.trim());
-          }
-          // 체크 배열에 L번째(ch[L]) 값이 0인 경우와 1인 경우로 나누어 재귀 함수 호출
-          else {
-            ch[L] = 1;
-            DFS(L + 1);
-            ch[L] = 0;
-            DFS(L + 1);
-          }
-        }
-        DFS(1);
-        return answer;
-      }
-
-      console.log(solution(3));
+      console.log(solution(4));
     </script>
   </body>
 </html>
