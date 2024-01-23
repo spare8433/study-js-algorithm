@@ -1,0 +1,82 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      function solution(arr) {
+        let answer = "NO";
+
+        // 집합의 원소로 구성된 배열 arr 의 인덱스를 값을 의미할 파라미터 i
+        // 두 가지 부분집합을 나누기 위한 배열 파라미터 lSet, rSet (로직에는 영향은 거의 없고 콘솔에서 확인 및 이해를 돕기 위한 용도)
+        // 두 가지 부분집합의 합을 저장할 문자열 파라미터 leftN, rightN
+        // 위 파라미터를 가지는 재귀함수 DFS 선언
+        function DFS(i = 0, leftN = 0, rightN = 0, lSet = [], rSet = []) {
+          // 보완가능 부분: 이미 두 부분집합의 원소의 합이 서로 같은 경우 즉 answer 값이 "YES" 라면 이후 불필요한 작업하지 않고 return 처리
+          // if (answer === "YES") return;
+          // 모든 원소를 부분집합으로 분리완료 된 경우
+          if (i === arr.length) {
+            // 확인을 위한 콘솔 출력
+            console.log(
+              `left 집합: ${lSet}  합: ${leftN} | right 집합: ${rSet}  합: ${rightN}`
+            );
+            // 두 부분집합의 합이 같다면 정답 문자열에 YES 로 변경
+            if (leftN === rightN) {
+              console.log("정답 확인");
+              answer = "YES";
+            }
+          }
+          // 좌측 부분집합에 i 번째 원소를 집어넣고 재귀함수 호출
+          else {
+            DFS(i + 1, leftN + arr[i], rightN, [...lSet, arr[i]], rSet);
+
+            // 재귀함수를 통해 좌측 부분 집합(lSet)에 가능한 모든 부분집합의 경우의 수와 우측 부분집합(rSet)에 가능한 모든 부분집합의 경우의 수는 같고
+            // 두 부분 집합의 합만 구하면 되기 떄문에 좌측 부분집합(lSet)과 우측 부분집합(rSet)을 구분할 필요가 없으므로 우측 부분집합 경우의 수를 제외
+            if (i > 0)
+              // 우측 부분집합에 i 번째 원소를 집어넣고 재귀함수 호출
+              DFS(i + 1, leftN, rightN + arr[i], lSet, [...rSet, arr[i]]);
+          }
+        }
+
+        DFS();
+        return answer;
+      }
+
+      // 정답지 방법
+      //   function solution(arr) {
+      //     let answer = "NO",
+      //       flag = 0; // 정답을 구했는지 여부
+      //     // 집합의 원소로 구성된 배열의 원소들 총합
+      //     let total = arr.reduce((a, b) => a + b, 0);
+      //     let n = arr.length;
+
+      //     // 배열의 인덱스를 의미할 파라미터 L, 한쪽 부분집합의 총합을 의미할 파라미터 sum
+      //     // 위 파라미터를 가지는 재귀함수 DFS 를 선언
+      //     function DFS(L, sum) {
+      //       // 이미 두 부분집합의 원소의 합이 서로 같은 경우 즉 flas 값이 1 이라면 이후 불필요한 작업하지 않고 return 처리
+      //       if (flag) return;
+
+      //       // 모든 원소를 부분집합으로 분리완료 된 경우
+      //       if (L === n) {
+      //         // 배열의 총합(total)에서 한쪽 부분집합의 합(sum) 을 뺀 값이 sum 과 같다면 두 부분 집합의 값이 같다는 것을 의미
+      //         if (total - sum === sum) {
+      //           answer = "YES";
+      //           flag = 1;
+      //         }
+      //       } else {
+      //         // 한쪽 부분집합에 L 번째 원소를 집어넣고 재귀함수 호출
+      //         DFS(L + 1, sum + arr[L]);
+      //         // 한쪽 부분집합에 L 번째 원소를 집어넣지 않고 재귀함수 호출
+      //         DFS(L + 1, sum);
+      //       }
+      //     }
+      //     DFS(0, 0);
+      //     return answer;
+      //   }
+
+      let arr = [1, 3, 5, 6, 7, 10];
+      console.log(solution(arr));
+    </script>
+  </body>
+</html>
