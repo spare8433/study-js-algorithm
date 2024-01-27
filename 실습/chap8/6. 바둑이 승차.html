@@ -1,0 +1,38 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      function solution(c, arr) {
+        let answer = Number.MIN_SAFE_INTEGER;
+
+        // 바둑이들의 무게 배열의 주소를 나타낼 파라미터 i, 현재 태운 바둑이들의 총 무게를 나타낼 파라미터 total
+        // 위 파라미터를 가진 재귀함수 DFS
+        function DFS(i, total = 0) {
+          // 이미 C 무게를 넘으면 다른 작업없이 재귀함수 조기종료
+          if (total > c) return;
+
+          // 모든 바둑이들(i)을 대해 트럭에 태우거나 태우지 않음을 체크한 상황
+          if (i === arr.length) {
+            // 현재 총 무게가 기존 최고값보다 크다면 anwer 변수에 저장
+            answer = Math.max(answer, total);
+            return;
+          } else {
+            // i 번째 바둑이를 태운 경우
+            DFS(i + 1, total + arr[i]);
+            // i 번째 바둑이를 태우지 않은 경우
+            DFS(i + 1, total);
+          }
+        }
+
+        DFS(0);
+        return answer;
+      }
+
+      let arr = [81, 58, 42, 33, 61];
+      console.log(solution(259, arr));
+    </script>
+  </body>
+</html>
