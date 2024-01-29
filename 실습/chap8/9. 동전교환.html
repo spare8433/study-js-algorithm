@@ -1,0 +1,48 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      function solution(m, arr) {
+        arr.sort((a, b) => b - a); // 동전을 내림차순으로 정렬
+        // 주어진 거스름돈을 가장 큰 동전으로 나눈 몫을 올림한 값으로 거스름돈에 사용될 가능한 최소 동전 개수를 의미
+        const MIN_POSSIE_COUNT = Math.ceil(m / arr[0]);
+        let answer = Number.MAX_SAFE_INTEGER;
+        // 로직과 별개로 정답을 구하는데 사용된 동전조합을 의미할 배열
+        let answerArr = [];
+
+        // 남은 거스름돈을 의미할 인자 num, 계산한 사용한 동전 개수를 의미할 인자 count, 현재까지 사용된 동전 조합을 의미할 배열 인자 checkArr
+        // 위 인자들로 남은 거스름돈을 재귀적으로 계산할 DFS 함수 선언
+        function DFS(num, count = 0, checkArr = []) {
+          // 이미 가능한 최소 값에 도달했다면 이후 함수과정을 스킵
+          if (answer === MIN_POSSIE_COUNT) return;
+
+          // 거스름돈이 0 일 때 현재까지 사용한 동전 개수를 현재까지 최소값과 비교 후 더 작은 경우 저장
+          if (num === 0) {
+            answer = Math.min(answer, count);
+            answerArr = checkArr;
+            return;
+          }
+
+          // 거스름돈이 0 보다작아진 즉 제대로 거스름돈을 줄 수 없는 경우이거나
+          // 이미 거스름돈에 사용한 동전이 최소값과 같거나 크다면 남은 거스름돈 계산이 의미없으므로 함수 종료
+          if (num < 0 || count >= answer) return;
+          // 아직 거스름돈이 남은 경우 높은 동전부터 계산한 거스름돈을 인자로 DFS 함수를 재귀적으로 호출
+          else {
+            for (let i = 0; i < arr.length; i++)
+              DFS(num - arr[i], count + 1, [...checkArr, arr[i]]);
+          }
+        }
+
+        DFS(m);
+        console.log("거스름돈에 사용한 동전 조합: ", answerArr);
+        return answer;
+      }
+
+      let arr = [1, 2, 5];
+      console.log(solution(15, arr));
+    </script>
+  </body>
+</html>
