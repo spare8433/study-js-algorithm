@@ -1,0 +1,35 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      function solution(m, arr) {
+        let answer = [];
+        // 주어진 자연수 배열 오름차순 정렬
+        arr.sort((a, b) => a - b);
+
+        // 현재 나열된 자연수 배열을 나타낼 인자 currentArr, 현재까지 자연수 뽑은 개수를 나타낼 인자 count
+        // 위 인자들을 가지고 주어진 자연수 배열에서 자연수를 뽑아 자연수 배열을 만들 재귀함수 recursion 선언
+        function recursion(currentArr = [], count = 0) {
+          // m 만큼 자연수를 뽑앗다면 현재까지 나열한 배열(currentArr)을 정답 배열에 추가
+          if (count === m) {
+            answer.push(currentArr);
+          } else {
+            // arr 순회하면서 현재까지 뽑히지 않은 자연수들을 순서대로 recursion 함수에 인자로 보내 재귀적으로 호출
+            arr.forEach((num) => {
+              if (!currentArr.includes(num))
+                recursion([...currentArr, num], count + 1);
+            });
+          }
+        }
+        recursion();
+        return answer;
+      }
+
+      let arr = [3, 6, 9];
+      console.log(solution(2, arr));
+    </script>
+  </body>
+</html>

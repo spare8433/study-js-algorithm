@@ -1,0 +1,26 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      function solution(n) {
+        let answer;
+
+        function recursion(num, total = 1) {
+          if (num <= 1) {
+            answer = total;
+          } else {
+            recursion(num - 1, total * num);
+          }
+        }
+
+        recursion(n);
+        return answer;
+      }
+
+      console.log(solution(5));
+    </script>
+  </body>
+</html>
