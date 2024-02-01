@@ -1,0 +1,53 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      function solution(n, m) {
+        let answer = [];
+
+        function recursion(arr = [], count = 0, index = 1) {
+          if (count === m) answer.push(arr);
+          else {
+            for (let i = index; i <= n; i++) {
+              recursion([...arr, i], count + 1, i + 1);
+            }
+          }
+        }
+
+        recursion();
+        return answer;
+      }
+
+      // 정답지 방법
+      function solution(n, m) {
+        let answer = [];
+        // 지금까지 뽑은 구슬을 저장할 m 길이만큼의 임시 배열 선언 후 0 으로 초기화
+        let tmp = Array.from({ length: m }, () => 0);
+
+        // 뽑은 구슬의 개수이자 임시배열에 들어갈 위치를 의미할 인자 L 다음에 뽑을 구슬의 번호를 의미할 인자 s
+        // 위 두 인자를 가지고 m 만큼 구슬을 뽑는 재귀함수 DFS 를 선언
+        function DFS(L, s) {
+          // 구슬을 m 만큼 다뽑은 경우
+          if (L === m) {
+            // 현재까지 뽑은 구슬 배열(tmp)을 정답 배열에 추가
+            answer.push(tmp.slice());
+          } else {
+            // 다음에 뽑을 구슬의 번호부터 n 까지 순회하면서 구슬을 tmp 배열에 L 번째 위치에 저장 후
+            // L 을 증가시키고 집어넣은 구슬번호 + 1 값을 각각 인자로 DFS 함수를 재귀적으로 호출
+            for (let i = s; i <= n; i++) {
+              tmp[L] = i;
+              DFS(L + 1, i + 1);
+            }
+          }
+        }
+        DFS(0, 1);
+        return answer;
+      }
+
+      console.log(solution(4, 2));
+    </script>
+  </body>
+</html>
