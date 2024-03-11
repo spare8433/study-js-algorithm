@@ -1,0 +1,64 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      // n : 정수의 갯수
+      // k : 뽑아야하는 숫자 개수
+      // arr : 주어진 정수 배열
+      // m :  정수조합의 합은 m 배수임을 확인 할 때 사용하는 변수
+      function solution(n, k, arr, m) {
+        let answer = 0;
+        // 더한값을 재활용할 배열 (정수의 값의 최대값과 정수의 최대 개수는 20이므로 최대값이 400 이므로 최대 길이만큼의 2차원 배열 생성)
+        let dy = Array.from(Array(20 * 20 + 1), () =>
+          Array(20 * 20 + 1).fill(0)
+        );
+
+        // count: 현재까지 조합된 정수의 수
+        // index: 조합이 가능한 배열의 시작 위치를 의미 (index - 1 위치의 값들까지 count 만큼 조합한 상황)
+        // 현재까지의 정수의 합
+        function DFS(count = 0, index = 0, hap = 0) {
+          // k 만큼 숫자를 조합했다면 재귀함수 숫자조합의 값을 확인 후 종료
+          if (count === k) {
+            console.log(hap);
+            // 숫자조합의 합이 m 의 배수라면 정답 변수의 값을 1 증가
+            if (hap % m === 0) {
+              answer++;
+              console.log("정답 :", hap);
+            }
+
+            return;
+          }
+
+          // i 번째부터 마지막 정수까지  조합을 재귀함수를
+          for (let i = index; i < n; i++) {
+            // n - i : 남은 정수의 개수 (현재 i - 1 번까지 count 개의 정수를 뽑은상황 이므로 n - i 값이 가능한 남은 정수의 개수를 의미)
+            // k - count : 현재 뽑아야하는 정수의 개수
+            // 남은 정수의 개수가 현재 뽑아야하는 정수의 개수보다 작다면 더이상 조합을 구성할 이유가 없으므로 더이상 조합을 구성하지않고 재귀함수 종료
+            if (n - i < k - count) {
+              return;
+            }
+
+            // dy[hap][arr[i]] 즉 현재 hap 과 i 번째 정수의 합이 배열에 계산값이 존재하지 않는다면 dy[hap][arr[i]] 에 더한값을 저장
+            if (dy[hap][arr[i]] === 0) dy[hap][arr[i]] = hap + arr[i];
+            console.log(
+              `count: ${count + 1}  i: ${i}  arr[i] : ${arr[i]}  hap : ${hap}`
+            );
+            // 현재 i 번째 정수를 조합에 추가했고 다음 조합에 들어갈 정수를 구하기 위해
+            // count 에서 1 증가한 값, i 번째 정수 다음의 정수부터 다시 조합하기 위해 i + 1 한 값, 현재까지 정수의 조합을 합을 저장해둔 dy[hap][arr[i]] 값으로 재귀함수 DFS 호출
+            DFS(count + 1, i + 1, dy[hap][arr[i]]);
+          }
+        }
+        console.log(dy);
+        DFS();
+
+        return answer;
+      }
+
+      let arr = [2, 4, 5, 8, 12];
+      console.log(solution(5, 3, arr, 6));
+    </script>
+  </body>
+</html>
