@@ -1,0 +1,72 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      function solution(board) {
+        let answer = 0;
+
+        let tempArr = Array.from(Array(7), () => new Array(7).fill(0));
+        tempArr[0][0] = 1;
+
+        console.log(tempArr);
+
+        function DFS(y, x, arr = []) {
+          if (x === 6 && y === 6) {
+            answer++;
+            console.log(...arr);
+            return;
+          }
+
+          // 상 이동
+          if (y > 0 && tempArr[y - 1][x] === 0 && board[y - 1][x] === 0) {
+            tempArr[y - 1][x] = 1;
+            DFS(y - 1, x, [...arr, [y - 1, x]]);
+
+            tempArr[y - 1][x] = 0;
+          }
+
+          // 하 이동
+          if (y < 6 && tempArr[y + 1][x] === 0 && board[y + 1][x] === 0) {
+            tempArr[y + 1][x] = 1;
+            DFS(y + 1, x, [...arr, [y + 1, x]]);
+
+            tempArr[y + 1][x] = 0;
+          }
+
+          // 좌 이동
+          if (x > 0 && tempArr[y][x - 1] === 0 && board[y][x - 1] === 0) {
+            tempArr[y][x - 1] = 1;
+            DFS(y, x - 1, [...arr, [y, x - 1]]);
+
+            tempArr[y][x - 1] = 0;
+          }
+
+          // 우 이동
+          if (x < 6 && tempArr[y][x + 1] === 0 && board[y][x + 1] === 0) {
+            tempArr[y][x + 1] = 1;
+            DFS(y, x + 1, [...arr, [y, x + 1]]);
+
+            tempArr[y][x + 1] = 0;
+          }
+        }
+        DFS(0, 0);
+        return answer;
+      }
+
+      let arr = [
+        [0, 0, 0, 0, 0, 0, 0],
+        [0, 1, 1, 1, 1, 1, 0],
+        [0, 0, 0, 1, 0, 0, 0],
+        [1, 1, 0, 1, 0, 1, 1],
+        [1, 1, 0, 0, 0, 0, 1],
+        [1, 1, 0, 1, 1, 0, 0],
+        [1, 0, 0, 0, 0, 0, 0],
+      ];
+
+      console.log(solution(arr));
+    </script>
+  </body>
+</html>
