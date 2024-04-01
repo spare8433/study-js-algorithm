@@ -7,29 +7,41 @@
     <script>
       function solution(n, arr) {
         let answer = 0;
+
+        // 인접리스트를 구현할 2차원배열
         let listArr = Array.from(Array(n + 1), () => new Array());
 
+        // 재귀함수 과정에서 방문한 노드들을 확인 하기 위한 체크용 배열
+        // (배열에 l 번째 위치에 1 이 위치한 경우 숫자 l 노드에 방문한 것을 의미)
         let ch = new Array(n + 1).fill(0);
-        ch[1] = 1;
+        ch[1] = 1; // 기본적으로 1번 노드 추가
 
-        arr.forEach(([s, e], index) => {
-          listArr[s].push(e);
-        });
+        // 주어진 연결정보를 listArr에 인접리스트로 구현
+        arr.forEach(([s, e], index) => listArr[s].push(e));
 
         console.log(listArr);
 
+        // 재귀함수 DFS
+        // current : 현재 노드 번호 1부터 시작하므로 1이 기본값
+        // chkArr : 현재까지 방문한 노드 순서대로 저장한 배열 시작값은 1 이므로 [1] 이 기본값
         function DFS(current = 1, chkArr = [1]) {
           if (current === n) {
             console.log("완성된 경로:", ...chkArr);
             return ++answer;
           }
 
-          for (let i = 0; i < listArr[current].length; i++) {
-            if (ch[listArr[current][i]] === 0) {
-              ch[current] = 1;
-              DFS(listArr[current][i], [...chkArr, listArr[current][i]]);
+          // 현재 current 번호가 방문할 수 있는 노드들을 가지고 있는 배열 listArr[current] 를 connArr 로 선언
+          let connArr = listArr[current];
 
-              ch[current] = 0;
+          // connArr 순회
+          for (let i = 0; i < connArr.length; i++) {
+            // 현재 current 번호가 방문할 수 있는 노드(connArr[i]) 를 확인용 배열 ch 인덱스값으로 넣어 방문 여부확인
+            // 이전에 방문하지 않았다면 ch 배열에 방문여부를 업데이트하고 방문할 노드값을 기준으로 DFS 재귀적으로 호출
+            if (ch[connArr[i]] === 0) {
+              ch[connArr[i]] = 1;
+              DFS(connArr[i], [...chkArr, connArr[i]]);
+
+              ch[connArr[i]] = 0; // 재활용을 위한 초기화
             }
           }
         }
