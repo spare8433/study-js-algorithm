@@ -1,0 +1,52 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      function solution(s, e) {
+        let answer = Number.MAX_SAFE_INTEGER;
+        let count = 0; // 콩콩이 이동 횟수를 저장할 변수
+
+        let queue = [s];
+        while (queue.length) {
+          console.log(queue); // 현재 큐 상황
+          let temp = queue.pop(); // 현재 큐에서 마지막 값을 꺼내 temp 에 저장
+
+          // 이미 count 를 넘겨버린 경우 확인할 필요가 없으므로 스킵
+          if (count >= answer) continue;
+
+          // temp 값이 송아지 위치에 도착한 경우
+          if (temp === e) {
+            console.log("도착   count: ", count);
+
+            // 도착까지 걸린 이동 횟수가 현재 최소 이동거리보다 작다면 answer 을 업데이트
+            if (count < answer) answer = count;
+
+            // 도착 이전 위치에서 다시 이동하는 경우의 수를 따지기 위해 count 를 1 감소
+            count - 1;
+          }
+
+          // 도착 위치보다 거리가 부족할 때 1칸, 5칸 앞으로 이동하는 경우를 배열에 추가 후 이동 했으므로 count 증가
+          if (temp < e) {
+            count++;
+            queue.push(temp + 1);
+            queue.push(temp + 5);
+          }
+
+          // 도착 위치를 넘어갈 때 1칸 뒤로 이동하는 경우를 배열에 추가 후 이동 했으므로 count 증가
+          if (temp > e) {
+            queue.push(temp - 1);
+            count++;
+          }
+        }
+
+        return answer;
+      }
+
+      console.log(solution(5, 14));
+      // console.log(solution(8, 3));
+    </script>
+  </body>
+</html>
