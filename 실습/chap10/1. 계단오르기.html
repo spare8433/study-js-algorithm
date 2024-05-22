@@ -1,0 +1,66 @@
+<html>
+
+  <head>
+    <meta charset="UTF-8">
+    <title>출력결과</title>
+  </head>
+
+  <body>
+    <script>
+      // BFS 활용
+      // 아래 방식의 단점은  중복된 계산을 반복할 수 있습니다.
+      function solution(n) {
+        let answer = 0;
+        const steps = [1, 2];
+        let que = [0]
+
+        // que 가 모두 비워질 때 까지 반복
+        while (que.length > 0) {
+          // que 에 있는 마지막 계단 위치 추출
+          let current = que.pop()
+
+          // 계단 위치가 마지막 계단 위치라면 답을 1 증가시키고 아래 과정을 스킵
+          if (current === n) {
+            answer++
+            continue;
+          }
+
+          // 계단에서 움직일 수 있는 경우의 수 만큼 que 에 추가
+          for (const s of steps) {
+            let tempStair = current + s
+            if (tempStair <= n) que.push(tempStair)
+          }
+        }
+
+        return answer;
+      }
+
+
+      // 다른 아이디어
+      // 1칸, 2칸, 4칸 씩 계단을 움직일 수 있다면 n 번째 계단에서 최종 목적지에 도착할 수 있는 총 경우의 수는 n+1,n+2,n+4 번째 계단의 이동할 수 있는 경우의 수의 합이므로
+      // 마지막 계단부터 계산하여 0 번째 계단 즉 처음부터 최종 목적지에 도착할 수 있는 총 경우의 수를 구하는 방식
+      // ex) 2번째 칸에서 최종 목적지에 도착할 수 있는 총 경우의 수는 1,2,4 씩 움직인 위치 즉 3,4,6 번째 계단에서 최종 목적지에 도착할 수 있는 경우의 수의 합이다.
+      function solution(n) {
+        let answer;
+        const steps = [1, 2, 4];
+        let stairArr = Array(n + 1).fill(0)
+        stairArr[n] = 1
+
+        // n-1 번째 부터 -1 해가며 0 까지 반복
+        for (let i = n - 1; i >= 0; i--) {
+          // 움직일 수 있는 경우의 수 만큼 반복 현재 위치에서 이동하여 도착할 수 있는 계단위치의 경우의수를 모두 더하여 현재 위치에서 도착할 수 있는 모든경우의 수를 저장
+          for (const s of steps) {
+            if (i + s <= n) stairArr[i] = stairArr[i] + stairArr[i + s]
+          }
+        }
+
+        // stairArr[0] 즉 계단에 오르기전 n 번째 계단에 도달하는 모든 경우의 수를 의미합니다.
+        answer = stairArr[0]
+        return answer
+      }
+
+      console.log(solution(7));
+    </script>
+  </body>
+
+</html>
