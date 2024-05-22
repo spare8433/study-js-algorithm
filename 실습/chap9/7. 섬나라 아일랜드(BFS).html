@@ -1,0 +1,76 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      function solution(board) {
+        let answer = 0; // 섬 갯수
+        let que = [];
+
+        // 좌표기준 이동가능한 방향을 모두 저장해둔 배열 moveArr
+        let moveArr = [
+          [-1, -1], // 좌측 상단 방향
+          [-1, 0], // 상단  방향향
+          [0, -1], // 촤측  방
+          [-1, 1], // 우측 상단 방향
+          [0, 1], // 우측  방향
+          [1, -1], // 좌측 하단 방향
+          [1, 0], // 하단  방향
+          [1, 1], // 우측 하단 방향
+        ];
+
+        // que 와 반복문을 활용해 연결된 섬이 있는지 확인하는 함수 BFS 선언
+        function BFS(y, x) {
+          answer++; // 새로운 섬 탐색을 시작했으므로 1 증가
+          que.push([y, x]); // 현재 좌표를 que 에 등록
+          board[y][x] = 0; // 방문여부 확인을 위해 현재 좌표의 값을 0 으로 초기화
+
+          console.log(`새로운 섬탐색 시작!   좌표: [${y},${x}]`);
+          while (que.length > 0) {
+            let [curY, curX] = que.pop(); // 탐색할 섬 좌표하나를 꺼내 각각 curY, curX 에 저장
+
+            // 이동할 수 있는 좌표를 전부 확인하기 위해 반복
+            for (const [moveY, moveX] of moveArr) {
+              const Y = curY + moveY; // 이동할 y 좌표 위치를 나타낼 변수 Y 선언
+              const X = curX + moveX; // 이동할 x 좌표 위치를 나타낼 변수 X 선언
+
+              // Y, X 값이 0 이상 board.length 미만인 경우 즉 이동할 수 있는 좌표만 확인
+              if (Y >= 0 && Y < board.length && X >= 0 && X < board.length) {
+                // 이동할 좌표에 이어진 섬이 있는 경우
+                if (board[Y][X] === 1) {
+                  console.log(`이어진 섬 발견! 좌표: [${Y},${X}]`);
+                  que.push([Y, X]); // que 에 이어진 섬 좌표 추가
+                  board[Y][X] = 0; // 발견한 섬은 확인을 위해 값을 0 으로 초기화
+                }
+              }
+            }
+          }
+
+          console.log("------- 섬탐색 종료 -------");
+        }
+
+        for (let y = 0; y < board.length; y++) {
+          for (let x = 0; x < board.length; x++) {
+            if (board[y][x] === 1) BFS(y, x); // 새로운 섬 발견 좌표
+          }
+        }
+
+        return answer;
+      }
+
+      let arr = [
+        [1, 1, 0, 0, 0, 1, 0],
+        [0, 1, 1, 0, 1, 1, 0],
+        [0, 1, 0, 0, 0, 0, 0],
+        [0, 0, 0, 1, 0, 1, 1],
+        [1, 1, 0, 1, 1, 0, 0],
+        [1, 0, 0, 0, 1, 0, 0],
+        [1, 0, 1, 0, 1, 0, 0],
+      ];
+
+      console.log(solution(arr));
+    </script>
+  </body>
+</html>

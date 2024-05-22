@@ -1,0 +1,121 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      // 처음 풀이 (오류 존재)
+      function solution(s, e) {
+        let answer = Number.MAX_SAFE_INTEGER;
+        let count = 0; // 콩콩이 이동 횟수를 저장할 변수
+
+        let queue = [s];
+        while (queue.length) {
+          console.log(queue); // 현재 큐 상황
+          let temp = queue.pop(); // 현재 큐에서 마지막 값을 꺼내 temp 에 저장
+
+          // 이미 count 를 넘겨버린 경우 확인할 필요가 없으므로 스킵
+          if (count >= answer) continue;
+
+          // temp 값이 송아지 위치에 도착한 경우
+          if (temp === e) {
+            console.log("도착   count: ", count);
+
+            // 도착까지 걸린 이동 횟수가 현재 최소 이동거리보다 작다면 answer 을 업데이트
+            if (count < answer) answer = count;
+
+            // 도착 이전 위치에서 다시 이동하는 경우의 수를 따지기 위해 count 를 1 감소
+            // ※ 오류 부분 ※
+            // 1칸 뒤로 이동하는 경우만큼 감소 해야하지만 1 만 감소했으므로 뒤로 이동하는 경우가 2회 이상인 경우 count 값에 오류가 생긴다
+            count - 1;
+          }
+
+          // 도착 위치보다 거리가 부족할 때 1칸, 5칸 앞으로 이동하는 경우를 배열에 추가 후 이동 했으므로 count 증가
+          if (temp < e) {
+            count++;
+            queue.push(temp + 1);
+            queue.push(temp + 5);
+          }
+
+          // 도착 위치를 넘어갈 때 1칸 뒤로 이동하는 경우를 배열에 추가 후 이동 했으므로 count 증가
+          if (temp > e) {
+            queue.push(temp - 1);
+            count++;
+          }
+        }
+
+        return answer;
+      }
+
+      // 정답지 방법 1
+      function solution(s, e) {
+        // n 번의 위치를 한번 위치한 이후에 다시 위치하지 않기 위한 확인용 배열
+        let ch = Array.from({ length: 10001 }, () => 0);
+        // n 번의 위치의 레벨을 저장할 배열
+        let dis = Array.from({ length: 10001 }, () => 0);
+        let queue = [];
+        queue.push(s); // 초기 위치 que 에 등록
+        ch[s] = 1; // s 위치 방문여부 업데이트
+        dis[s] = 0; // s 위치 레벨 0 으로 초기화
+
+        // queue 에 위치가 남아있을 때 까지 반복
+        while (queue.length) {
+          let x = queue.shift(); // 현재 큐에서 맨 앞의 값을 꺼내 x 에 저장
+
+          // x - 1, x + 1, x + 5  각각의 값을 nx 변수에 담아 반복
+          for (let nx of [x - 1, x + 1, x + 5]) {
+            // e 위치에 도착한 경우 현재 레벨의 값을 반환하여 함수 종료 (dis[x] 는 이전 위치의 레벨 값이므로 + 1 한값이 현재 레벨값을 의미)
+            if (nx === e) return dis[x] + 1;
+
+            // 위치가 1보다 크고 최대 위치보다 작고 방문한 경험이 없는 위치인 경우
+            // 확인용 배열 업데이트, 큐에 배열에 현재 위치 추가, 현재 위치 레벨값 업데이트 등을 처리
+            if (nx > 0 && nx <= 10000 && ch[nx] === 0) {
+              ch[nx] = 1;
+              queue.push(nx);
+              dis[nx] = dis[x] + 1;
+            }
+          }
+        }
+      }
+
+      // 정답지 방법 2
+      function solution(s, e) {
+        // n 번의 위치를 한번 위치한 이후에 다시 위치하지 않기 위한 확인용 배열
+        let ch = Array.from({ length: 10001 }, () => 0);
+        let queue = [];
+        queue.push(s);
+        ch[s] = 1; // s 위치 방문여부 업데이트
+        let L = 0; // 레벨을 의미할 변수 L 을 0 으로 초기화
+
+        // que 에 위치가 남아있을 때 까지 반복
+        while (queue.length) {
+          // que 길이를 len 변수에 저장
+          let len = queue.length;
+
+          //현재 큐를 순회
+          for (let i = 0; i < len; i++) {
+            let x = queue.shift(); // 현재 큐에서 맨 앞의 값을 꺼내 x 에 저장
+
+            // x - 1, x + 1, x + 5  각각의 값을 nx 변수에 담아 반복
+            for (let nx of [x - 1, x + 1, x + 5]) {
+              // e 위치에 도착한 경우 현재 레벨의 값을 반환하여 함수 종료 (현재 탐색중인 레벨은 이전까지의 탐색 레벨인 L 에 + 1 값)
+              if (nx === e) return L + 1;
+
+              // 위치가 1보다 크고 최대 위치보다 작고 방문한 경험이 없는 위치인 경우
+              // 확인용 배열 업데이트, 큐에 배열에 현재 위치 추가
+              if (nx > 0 && nx <= 10000 && ch[nx] === 0) {
+                ch[nx] = 1;
+                queue.push(nx);
+              }
+            }
+          }
+          L++; // 현재까지 레벨을 탐색을 마친후 레벨을 1 상승
+        }
+      }
+
+      console.log(solution(0, 22));
+      // console.log(solution(8, 3));
+    </script>
+  </body>
+</html>
